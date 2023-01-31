@@ -15,17 +15,17 @@
 void	message_five(t_philo *phil, long long start)
 {
 	(void)start;
-	if (phil->all->num_philo > 2 && phil->id != phil->all->num_philo)
+	/*if (phil->all->num_philo > 2 && phil->id != phil->all->num_philo)
 		printf("%llu %d is died \n", \
 			philo_get_time() - phil->all->time_start, phil->id + 1);
 	else if (phil->all->num_philo > 2 && phil->id == phil->all->num_philo)
 		printf("%llu %d is died \n", \
 			philo_get_time() - phil->all->time_start, 1);
-	else
-		printf("%llu %d is died \n", \
-			philo_get_time() - phil->all->time_start, 2);
+	else*/
+	printf("%llu %d is died \n", \
+			philo_get_time() - phil->all->time_start, phil->id);
 	pthread_mutex_unlock(&phil->all->die);
-	pthread_mutex_lock(&phil->all->aff);
+	//pthread_mutex_lock(&phil->all->aff);
 	return ;
 }
 
@@ -34,7 +34,7 @@ void	message_six(t_philo *phil)
 	printf("%llu Each philosophers ate %d times. \n", \
 		philo_get_time() - phil->all->time_start, phil->all->number_eats);
 	pthread_mutex_unlock(&phil->all->die);
-	pthread_mutex_lock(&phil->all->aff);
+	//pthread_mutex_lock(&phil->all->aff);
 	return ;
 }
 
@@ -60,6 +60,7 @@ void	put_message(t_philo *phil, int i)
 
 	if (flop == 1)
 		return ;
+	pthread_mutex_lock(&phil->all->aff);
 	if (i == 5)
 	{
 		flop = 1;
@@ -67,7 +68,6 @@ void	put_message(t_philo *phil, int i)
 	}
 	else if (i == 6)
 		return (message_six(phil));
-	pthread_mutex_lock(&phil->all->aff);
 	if (i == 1 || i == 2 || i == 3 || i == 4)
 		first_messages(phil, i);
 	if (i != 5 && i != 6)

@@ -32,21 +32,23 @@ t_philo	*distrib_fork(t_philo *phil)
 
 t_philo	*eat(t_philo *phil)
 {
-	if (check_death(phil) != NULL)
-		return (NULL);
+	//if (check_death(phil) != NULL)
+	//	return (NULL);
+	phil->eating = 1;
 	put_message(phil, 2);
+	phil->last_meal = philo_get_time();
 	ft_usleep(phil->all->time_for_eat);
 	phil->eating = 0;
 	pthread_mutex_unlock(phil->r_fork);
 	pthread_mutex_unlock(phil->left_fork);
-	phil->last_meal = philo_get_time() - phil->all->time_start;
+	//phil->last_meal = philo_get_time() - phil->all->time_start;
 	return (phil);
 }
 
 void	sleep_and_think(t_philo *philo)
 {
-	if (check_death(philo) != NULL)
-		return ;
+	//if (check_death(philo) != NULL)
+	//	return ;
 	put_message(philo, 3);
 	ft_usleep(philo->all->time_for_sleep);
 	put_message(philo, 4);
@@ -72,6 +74,7 @@ void	*routine(void *phil)
 	if (start == 0)
 		start = philo->all->time_start;
 	philo->all->time_start = start;
+	philo->last_meal = philo_get_time();
 	while (1)
 	{
 		help_routine(philo);

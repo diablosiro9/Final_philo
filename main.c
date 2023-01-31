@@ -68,6 +68,7 @@ t_all	*doing_all(t_all *all)
 	pthread_mutex_lock(&all->die);
 	laucher(all, i);
 	pthread_mutex_lock(&all->die);
+	pthread_mutex_unlock(&all->die);
 	pthread_mutex_destroy(&all->die);
 	pthread_mutex_destroy(&all->aff);
 	return (all);

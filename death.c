@@ -14,8 +14,7 @@
 
 t_philo	*check_death(t_philo *phil)
 {
-	if (philo_get_time() - (phil->last_meal) - phil->all->time_start \
-				>= phil->all->time_for_dead - 1)
+	if (philo_get_time() - (phil->last_meal) >= phil->all->time_for_dead)
 	{
 		put_message(phil, 5);
 		return (phil);
@@ -41,16 +40,14 @@ void	*still_alive(void *phil)
 	{
 		if (flop == 1)
 			return (NULL);
-		pthread_mutex_lock(&philo->is_dead);
-		if (philo->eating == 0 && ((philo_get_time() - \
-			(philo->last_meal) - philo->all->time_start \
-				> philo->all->time_for_dead - 1) || philo->died == 1))
+		//pthread_mutex_lock(&philo->is_dead);
+		if (philo->eating == 0 && ((philo_get_time() - (philo->last_meal) > philo->all->time_for_dead) || philo->died == 1))
 		{
 			if ((philo_get_time() - \
 			(philo->last_meal) - philo->all->time_start \
-				< philo->all->time_for_dead - 1))
+				< philo->all->time_for_dead))
 				break ;
-			pthread_mutex_lock(&philo->all->aff);
+			//pthread_mutex_lock(&philo->all->aff);
 			pthread_mutex_unlock(&philo->is_dead);
 			flop = 1;
 			if (philo->died == 1)
@@ -58,7 +55,7 @@ void	*still_alive(void *phil)
 			put_message(phil, 5);
 			return (NULL);
 		}
-		pthread_mutex_unlock(&philo->is_dead);
+		//pthread_mutex_unlock(&philo->is_dead);
 	}
 	return (NULL);
 }
